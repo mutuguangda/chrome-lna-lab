@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chrome LNA 对照实验</title><link rel="stylesheet" href="./style.css"></head>
+<body>
+<main>
+  <h1>Chrome LNA 对照实验</h1>
+  <p>保持 Local Network Access Checks 为 Default 或 Enabled。关闭系统代理及 TUN，按顺序在同一个浏览器环境测试。</p>
+  <p class="notice">allow 是权限委托，仍受用户授权和父页面策略约束。当前为公网 HTTPS 静态实验。默认 iframe 与父页面同源，可验证公网到内网的 LNA。跨域 iframe 委托需填写另一公网来源的 frame.html 完整地址。Pages 不提供后端网关或自定义 Permissions-Policy。</p>
+  <section>
+    <label>iframe 页面地址 <input id="frame-origin" type="url" required></label>
+    <select id="policy" hidden><option value="default">Pages 默认响应头</option></select>
+    <button id="apply-policy" hidden>应用</button>
+    <label>实验场景 <select id="scenario"><option value="baseline">A · 不加 allow，直连接口</option><option value="allow">B · 添加 allow，直连接口</option></select></label>
+    <button id="load">加载 / 重建 iframe</button>
+    <p>切换场景会销毁旧 iframe，不会自动请求接口。请在 iframe 内点击请求。</p>
+    <pre id="embedding"></pre>
+    <pre id="environment"></pre>
+  </section>
+  <p><a href="./frame.html" target="_blank" rel="noopener">单独打开请求页面，先验证顶层页面直连</a></p>
+  <div id="frame-container"></div>
+  <section>
+    <h2>实验记录</h2>
+    <div class="row">
+      <label>Chrome flag <select id="flag"><option>Default</option><option>Enabled</option><option>Disabled（仅诊断）</option></select></label>
+      <label>系统代理 / TUN <select id="proxy"><option>已关闭</option><option>已开启</option><option>未确认</option></select></label>
+      <label>站点网络授权 <select id="grant"><option>未确认</option><option>询问</option><option>允许</option><option>禁止</option></select></label>
+    </div>
+    <label>补充记录（Console 错误、Network 远端 IP、VPN 状态等）<textarea id="notes" rows="2"></textarea></label>
+    <button id="export">导出 JSON 记录</button>
+    <p>页面无法读取 chrome://flags、系统代理或 Chrome 的实际 DNS。上面三项需要手工填写，每次请求时记录当前值。</p>
+    <pre id="results">暂无记录</pre>
+  </section>
+</main>
+<script type="module" src="./parent.js"></script>
+</body>
+</html>

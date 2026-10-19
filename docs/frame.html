@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>iframe 请求端</title><link rel="stylesheet" href="./style.css"></head>
+<body class="frame-body"><main>
+  <h2 id="title">iframe 请求端</h2>
+  <pre id="environment"></pre>
+  <label>请求地址 <input id="endpoint" type="url" placeholder="填写需要验证的 HTTPS 内网接口"></label>
+  <label>接口 query 参数（可留空）<input id="query" placeholder="key=value&key2=value2"></label>
+  <div class="row">
+    <label>credentials <select id="credentials"><option value="omit">omit</option><option value="include">include</option></select></label>
+    <label>Authorization（可选，仅本次请求使用）<input id="authorization" type="password" autocomplete="off"></label>
+  </div>
+  <p>默认 GET，接口地址只在浏览器中使用。include 仍受跨站 Cookie 和 CORS 限制。</p>
+  <button id="request">发送 GET 请求</button>
+  <button id="inspect">刷新权限状态</button>
+  <pre id="result">等待手动请求</pre>
+</main><script type="module" src="./frame.js"></script></body>
+</html>
